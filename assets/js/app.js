@@ -606,20 +606,19 @@ var elements =
 
 
 
-
-
-var inputLetter;
 document.onkeyup = function(keyPress) {
 	//keyCode 8 for backspace
 	if (keyPress.keyCode == 8){
 		elementsPanel.backSpace();
 	}
 	else{
-		inputLetter = String.fromCharCode(keyPress.keyCode).toLowerCase();
+		var inputLetter = String.fromCharCode(keyPress.keyCode).toLowerCase();
 		elementsPanel.lettersPressed.push(inputLetter);
 
-		console.log(inputLetter);
+		console.log("User pressed: " + inputLetter);
 		console.log(elementsPanel.lettersPressed);
+
+		$("#current-letters").text(elementsPanel.lettersPressed);
 
 		elementsPanel.findElement();
 	}
@@ -670,8 +669,16 @@ var elementsPanel = {
 
 		if (this.lettersPressed.length > 0){
 			this.lettersPressed.pop();
+
 			console.log("After deleting: " + this.lettersPressed);
+			console.log(this.lettersPressed);
+
+			$("#current-letters").text(this.lettersPressed);
+
 			this.findElement();
+		}
+		if (this.lettersPressed.length == 0){
+			$("#current-letters").text("Search");
 		}
 	},
 	displayElements: function(elementsArray){
@@ -689,7 +696,7 @@ var elementsPanel = {
 
 
 			var elementDiv = $("<div>");
-			elementDiv.addClass("col-sm-1 box");
+			elementDiv.addClass("col-sm-4 box");
 			elementDiv.attr("data-atom", elementsArray[i].atomicNumber);
 			elementDiv.append(elementP);
 

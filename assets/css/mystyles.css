@@ -1,16 +1,27 @@
 .box {
 	border: 2px black solid;
 }
+#header{
+	height: 100px;
+}
+#current-letters{
+	text-align:center;
+}
+#elements-found{
+	height: 428px;
+}
 
 #atomic-number-p{
-
+	margin-bottom:0;
 }
 #acronym-h2{
-
+	margin:0;
+	text-align: center;
 }
 #name-p{
-
+	text-align: center;	
+	margin:0;
 }
 #mass-p{
-	
+	text-align: center;
 }
