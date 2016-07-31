@@ -606,9 +606,31 @@ var elements =
 ]
 
 $(document.body).on('click', '.clickableElement', function(){
-	var atomNumber = $(this).data("atom");
+	var atomData = $(this).data("atom");
+	var currentElement = elements[atomData-1];
 
-	console.log(atomNumber);
+	var atomDiv = $("<div>");
+	atomDiv.attr("data-atom", atomData);
+	atomDiv.addClass("calculatableElement box");
+
+	var plusButton = $("<button>");
+	plusButton.html("+");
+	plusButton.addClass("plusButton btn btn-xs");
+
+	var atomP = $("<p>");
+	atomP.text(currentElement.elementAcronym);
+	atomP.addClass("calculatableAcronym");
+
+	var minusButton = $("<button>");
+	minusButton.html("-");
+	minusButton.addClass("minusButton btn btn-xs");
+
+	atomDiv.append(plusButton);
+	atomDiv.append(atomP);
+	atomDiv.append(minusButton);
+
+	$("#elements-chosen").append(atomDiv);
+	
 
 });
 
@@ -628,6 +650,10 @@ document.onkeyup = function(keyPress) {
 
 		elementsPanel.findElement();
 	}
+}
+
+var calculationPanel = {
+	multiplier: 1,
 }
 
 
