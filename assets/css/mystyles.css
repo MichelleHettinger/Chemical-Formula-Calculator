@@ -10,7 +10,9 @@
 #elements-found{
 	height: 428px;
 }
-
+.clickableElement:hover{
+	cursor: pointer;
+}
 #atomic-number-p{
 	margin-bottom:0;
 }

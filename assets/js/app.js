@@ -1,3 +1,4 @@
+$(document).ready(function(){
 //Index of atomic number = atomic number - 1
 // elements[99].atomicNumber = 100
 var elements = 
@@ -604,7 +605,12 @@ var elements =
 	}
 ]
 
+$(document.body).on('click', '.clickableElement', function(){
+	var atomNumber = $(this).data("atom");
 
+	console.log(atomNumber);
+
+});
 
 document.onkeyup = function(keyPress) {
 	//keyCode 8 for backspace
@@ -696,7 +702,7 @@ var elementsPanel = {
 
 
 			var elementDiv = $("<div>");
-			elementDiv.addClass("col-sm-4 box");
+			elementDiv.addClass("col-sm-4 clickableElement box");
 			elementDiv.attr("data-atom", elementsArray[i].atomicNumber);
 			elementDiv.append(elementP);
 
@@ -708,6 +714,12 @@ var elementsPanel = {
 
 
 
+
+
+
+
+
+})
 
 
 
