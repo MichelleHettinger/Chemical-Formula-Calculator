@@ -604,67 +604,106 @@ var elements =
 	}
 ]
 
-var inputLetter;
-var lettersPressed = [];
-var listElements = [];
-var listElements2 = [];
-var listElements3 = [];
 
+
+
+
+var inputLetter;
 document.onkeyup = function(keyPress) {
 	//keyCode 8 for backspace
 	if (keyPress.keyCode == 8){
-		backSpace();
+		elementsPanel.backSpace();
 	}
 	else{
 		inputLetter = String.fromCharCode(keyPress.keyCode).toLowerCase();
-		lettersPressed.push(inputLetter);
+		elementsPanel.lettersPressed.push(inputLetter);
 
 		console.log(inputLetter);
-		console.log(lettersPressed);
+		console.log(elementsPanel.lettersPressed);
 
-		findElement();
+		elementsPanel.findElement();
 	}
 }
 
-function backSpace(){
-	if (lettersPressed.length > 0){
-		lettersPressed.pop();
-		console.log("After deleting: " + lettersPressed);
-	}
-	findElement();
-}
 
-function findElement(){
-	if (lettersPressed.length == 1){
-		for (i=0; i<elements.length;i++){
-			if (lettersPressed[0] == elements[i].elementName.charAt(0).toLowerCase() || lettersPressed[0] == elements[i].elementAcronym.charAt(0).toLowerCase()){
-				listElements.push(elements[i]);
+var elementsPanel = {
+
+	lettersPressed: [],
+	listElements: [],
+	listElements2: [],
+	listElements3: [],
+
+	findElement: function(){
+		if (this.lettersPressed.length == 1){
+			this.listElements = [];
+			for (i=0; i<elements.length;i++){
+				if (this.lettersPressed[0] == elements[i].elementName.charAt(0).toLowerCase() || this.lettersPressed[0] == elements[i].elementAcronym.charAt(0).toLowerCase()){
+					this.listElements.push(elements[i]);
+				}
 			}
+			console.log(this.listElements);
+			this.displayElements(this.listElements);
 		}
-		console.log(listElements);
-		displayElements(listElements);
-	}
-	else if (lettersPressed.length == 2){
-		for (i=0;i<listElements.length;i++){
-			if (lettersPressed[1] == listElements[i].elementName.charAt(1) || lettersPressed[1] == listElements[i].elementAcronym.charAt(1)){
-				listElements2.push(listElements[i]);
+		else if (this.lettersPressed.length == 2){
+			this.listElements2 = [];
+			for (i=0;i<this.listElements.length;i++){
+				if (this.lettersPressed[1] == this.listElements[i].elementName.charAt(1) || this.lettersPressed[1] == this.listElements[i].elementAcronym.charAt(1)){
+					this.listElements2.push(this.listElements[i]);
+				}
 			}
+			console.log(this.listElements2);
+			this.displayElements(this.listElements2);
 		}
-		console.log(listElements2);
-		displayElements(listElements2);
-	}
-	else if (lettersPressed.length == 3){
-		for (i=0;i<listElements2.length;i++){
-			if (lettersPressed[2] == listElements2[i].elementName.charAt(2)){
-				listElements3.push(listElements2[i]);
+		else if (this.lettersPressed.length == 3){
+			this.listElements3 = [];
+			for (i=0;i<this.listElements2.length;i++){
+				if (this.lettersPressed[2] == this.listElements2[i].elementName.charAt(2)){
+					this.listElements3.push(this.listElements2[i]);
+				}
 			}
+			console.log(this.listElements3);
+			this.displayElements(this.listElements3);
 		}
-		console.log(listElements3);
-		displayElements(listElements3);
-	}
+	},
+	backSpace: function(){
+		$("#elements-found").empty();
+
+		if (this.lettersPressed.length > 0){
+			this.lettersPressed.pop();
+			console.log("After deleting: " + this.lettersPressed);
+			this.findElement();
+		}
+	},
+	displayElements: function(elementsArray){
+		$("#elements-found").empty();
+
+		for(var i=0; i<elementsArray.length; i++){
+
+			var elementP = 
+			$(
+				"<p id='atomic-number-p'>" + elementsArray[i].atomicNumber + "</p>" +
+				"<h2 id='acronym-h2'>" + elementsArray[i].elementAcronym + "</h2>" +
+				"<p id='name-p'>" + elementsArray[i].elementName + "</p>" +
+				"<p id='mass-p'>" + elementsArray[i].mass + "</p>"
+			);
+
+
+			var elementDiv = $("<div>");
+			elementDiv.addClass("col-sm-1 box");
+			elementDiv.attr("data-atom", elementsArray[i].atomicNumber);
+			elementDiv.append(elementP);
+
+
+			$("#elements-found").append(elementDiv);
+		}
+	},
 }
 
 
-function displayElements(elementsArray){
-	
-}
+
+
+
+
+
+
+
