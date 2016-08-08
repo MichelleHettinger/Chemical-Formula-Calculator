@@ -669,7 +669,7 @@ document.onkeyup = function(keyPress) {
 		console.log("User pressed: " + inputLetter);
 		console.log(elementsPanel.lettersPressed);
 
-		$("#current-letters").text(elementsPanel.lettersPressed);
+		$("#current-letters").text(elementsPanel.lettersPressed.join(" "));
 
 		elementsPanel.findElement();
 	}
