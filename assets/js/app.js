@@ -604,6 +604,10 @@ var elements =
 		atomicNumber: 100
 	}
 ]
+var displayedElements = {
+
+}
+
 
 $(document.body).on('click', '.clickableElement', function(){
 	//atomData is the atomic number.
@@ -613,38 +617,7 @@ $(document.body).on('click', '.clickableElement', function(){
 	calculationPanel.selectedAtoms.push(currentElement);
 	calculationPanel.atomMultiplier.push(1);
 
-	var atomDiv = $("<div>");
-	atomDiv.attr("data-atom", atomData);
-	atomDiv.attr("data-position", calculationPanel.atomPosition);	
-	atomDiv.addClass("calculatableElement box");
-	atomDiv.attr("id", "data-position-d-" + calculationPanel.atomPosition);
-
-	var plusButton = $("<button>");
-	plusButton.html("+");
-	plusButton.addClass("plusButton btn btn-xs");
-	plusButton.attr("data-atom", atomData);
-	plusButton.attr("data-position", calculationPanel.atomPosition);
-
-	var atomP = $("<p>");
-	atomP.text(currentElement.elementAcronym);
-	atomP.addClass("calculatableAcronym");
-	atomP.attr("id", "data-position-p-" + calculationPanel.atomPosition);
-
-	var minusButton = $("<button>");
-	minusButton.html("-");
-	minusButton.addClass("minusButton btn btn-xs");
-	minusButton.attr("data-atom", atomData);
-	minusButton.attr("data-position", calculationPanel.atomPosition);
-
-	atomDiv.append(plusButton);
-	atomDiv.append(atomP);
-	atomDiv.append(minusButton);
-
-	$("#elements-chosen").append(atomDiv);
-
-	calculationPanel.atomPosition++;
-
-	calculationPanel.calculate();
+	calculationPanel.adjustAtom();
 
 })
 
@@ -678,6 +651,11 @@ $(document.body).on('click', '.minusButton', function(){
 
 	if(calculationPanel.atomMultiplier[atomPos] == 0){
 		atomDiv.remove();
+		calculationPanel.selectedAtoms.splice(atomPos, 1);
+		calculationPanel.atomMultiplier.splice(atomPos, 1);
+
+		calculationPanel.adjustAtom();
+		console.log(calculationPanel.selectedAtoms);
 	}
 
 })
@@ -701,11 +679,47 @@ document.onkeyup = function(keyPress) {
 }
 
 var calculationPanel = {
-	atomPosition:0,
 	selectedAtoms:[],
 	atomMultiplier:[],
 	total:0,
 
+	adjustAtom: function(){
+		$("#elements-chosen").empty();
+		for(var i=0; i<this.selectedAtoms.length; i++){
+
+			var currentAtom = calculationPanel.selectedAtoms[i];
+
+			var atomDiv = $("<div>");
+			atomDiv.attr("data-atom", currentAtom.atomicNumber);	
+			atomDiv.addClass("calculatableElement");
+			atomDiv.attr("id", "data-position-d-" + i);
+
+			var plusButton = $("<button>");
+			plusButton.html("+");
+			plusButton.addClass("plusButton btn btn-xs");
+			plusButton.attr("data-atom", currentAtom.atomicNumber);
+			plusButton.attr("data-position", i);
+
+			var atomP = $("<p>");
+			atomP.text(currentAtom.elementAcronym);
+			atomP.addClass("calculatableAcronym");
+			atomP.attr("id", "data-position-p-" + i);
+
+			var minusButton = $("<button>");
+			minusButton.html("-");
+			minusButton.addClass("minusButton btn btn-xs");
+			minusButton.attr("data-atom", currentAtom.atomicNumber);
+			minusButton.attr("data-position", i);
+
+			atomDiv.append(plusButton);
+			atomDiv.append(atomP);
+			atomDiv.append(minusButton);
+
+			$("#elements-chosen").append(atomDiv);
+
+			this.calculate();	
+		}
+	},
 	calculate: function(){
 		this.total = 0;
 
