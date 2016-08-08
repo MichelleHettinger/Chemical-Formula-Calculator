@@ -160,16 +160,16 @@ var elements =
 		atomicNumber: 26
 	},
 	{
-		mass: 58.6934,
-		elementName: "Nickel",
-		elementAcronym: "Ni",
-		atomicNumber: 28
-	},
-	{
 		mass: 58.9332,
 		elementName: "Cobalt",
 		elementAcronym: "Co",
 		atomicNumber: 27
+	},	
+	{
+		mass: 58.6934,
+		elementName: "Nickel",
+		elementAcronym: "Ni",
+		atomicNumber: 28
 	},
 	{
 		mass: 63.546,
@@ -606,33 +606,81 @@ var elements =
 ]
 
 $(document.body).on('click', '.clickableElement', function(){
+	//atomData is the atomic number.
 	var atomData = $(this).data("atom");
 	var currentElement = elements[atomData-1];
 
+	calculationPanel.selectedAtoms.push(currentElement);
+	calculationPanel.atomMultiplier.push(1);
+
 	var atomDiv = $("<div>");
 	atomDiv.attr("data-atom", atomData);
+	atomDiv.attr("data-position", calculationPanel.atomPosition);	
 	atomDiv.addClass("calculatableElement box");
+	atomDiv.attr("id", "data-position-d-" + calculationPanel.atomPosition);
 
 	var plusButton = $("<button>");
 	plusButton.html("+");
 	plusButton.addClass("plusButton btn btn-xs");
+	plusButton.attr("data-atom", atomData);
+	plusButton.attr("data-position", calculationPanel.atomPosition);
 
 	var atomP = $("<p>");
 	atomP.text(currentElement.elementAcronym);
 	atomP.addClass("calculatableAcronym");
+	atomP.attr("id", "data-position-p-" + calculationPanel.atomPosition);
 
 	var minusButton = $("<button>");
 	minusButton.html("-");
 	minusButton.addClass("minusButton btn btn-xs");
+	minusButton.attr("data-atom", atomData);
+	minusButton.attr("data-position", calculationPanel.atomPosition);
 
 	atomDiv.append(plusButton);
 	atomDiv.append(atomP);
 	atomDiv.append(minusButton);
 
 	$("#elements-chosen").append(atomDiv);
-	
 
-});
+	calculationPanel.atomPosition++;
+
+	calculationPanel.calculate();
+
+})
+
+$(document.body).on('click', '.plusButton', function(){
+	var atomPos = $(this).data("position");
+	var atomData = $(this).data("atom");
+	var currentElement = elements[atomData-1];
+
+	calculationPanel.atomMultiplier[atomPos]++;
+
+	var atomP = $("#data-position-p-" + atomPos);
+	atomP.html(currentElement.elementAcronym + "<sub>" + calculationPanel.atomMultiplier[atomPos] + "</sub>");
+
+	calculationPanel.calculate();
+
+})
+$(document.body).on('click', '.minusButton', function(){
+
+	var atomPos = $(this).data("position");
+	var atomData = $(this).data("atom");
+	var currentElement = elements[atomData-1];
+
+	calculationPanel.atomMultiplier[atomPos]--;
+
+	var atomP = $("#data-position-p-" + atomPos);
+	atomP.html(currentElement.elementAcronym + "<sub>" + calculationPanel.atomMultiplier[atomPos] + "</sub>");
+
+	calculationPanel.calculate();
+
+	var atomDiv = $("#data-position-d-" + atomPos);
+
+	if(calculationPanel.atomMultiplier[atomPos] == 0){
+		atomDiv.remove();
+	}
+
+})
 
 document.onkeyup = function(keyPress) {
 	//keyCode 8 for backspace
@@ -653,7 +701,21 @@ document.onkeyup = function(keyPress) {
 }
 
 var calculationPanel = {
-	multiplier: 1,
+	atomPosition:0,
+	selectedAtoms:[],
+	atomMultiplier:[],
+	total:0,
+
+	calculate: function(){
+		this.total = 0;
+
+		for (var i=0; i<this.selectedAtoms.length; i++){
+			this.total += (this.selectedAtoms[i].mass)*(this.atomMultiplier[i]);
+		}
+
+		$("#molecular-weight").text(this.total + "grams per mole");
+	},
+
 }
 
 
