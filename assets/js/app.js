@@ -714,6 +714,9 @@ var calculationPanel = {
 
 			$("#elements-chosen").append(atomDiv);
 
+			var atomP = $("#data-position-p-" + i);
+			atomP.html(currentAtom.elementAcronym + "<sub>" + calculationPanel.atomMultiplier[i] + "</sub>");
+			
 			this.calculate();	
 		}
 	},
