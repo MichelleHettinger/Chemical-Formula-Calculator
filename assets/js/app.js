@@ -604,9 +604,6 @@ var elements =
 		atomicNumber: 100
 	}
 ]
-var displayedElements = {
-
-}
 
 
 $(document.body).on('click', '.clickableElement', function(){
@@ -665,7 +662,7 @@ document.onkeyup = function(keyPress) {
 	if (keyPress.keyCode == 8){
 		elementsPanel.backSpace();
 	}
-	else{
+	else if (keyPress.keyCode >= 65 && keyPress.keyCode <= 90){
 		var inputLetter = String.fromCharCode(keyPress.keyCode).toLowerCase();
 		elementsPanel.lettersPressed.push(inputLetter);
 
