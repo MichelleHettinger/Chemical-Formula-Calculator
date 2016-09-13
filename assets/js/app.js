@@ -727,10 +727,10 @@ var calculationPanel = {
 		this.total = 0;
 
 		for (var i=0; i<this.selectedAtoms.length; i++){
-			this.total += (this.selectedAtoms[i].mass)*(this.atomMultiplier[i]).toFixed(2);
+			this.total += (this.selectedAtoms[i].mass)*(this.atomMultiplier[i]);
 		}
 
-		$("#molecular-weight").text(this.total + "grams per mole");
+		$("#molecular-weight").text(this.total.toFixed(2) + " grams per mole");
 	},
 
 }
