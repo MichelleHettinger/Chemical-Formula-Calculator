@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/MichelleHettinger/Molecular-Weight-Calculator/issues"
   },
-  "homepage": "https://github.com/MichelleHettinger/Molecular-Weight-Calculator#readme"
+  "homepage": "https://github.com/MichelleHettinger/Molecular-Weight-Calculator#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
 }
