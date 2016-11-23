@@ -1,0 +1,24 @@
+{
+  "name": "molecular-weight-calculator",
+  "version": "1.0.0",
+  "description": "Calculate weights of chemical compounds",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MichelleHettinger/Molecular-Weight-Calculator.git"
+  },
+  "keywords": [
+    "chemistry",
+    "calculators",
+    "molecules"
+  ],
+  "author": "Michelle Hettinger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MichelleHettinger/Molecular-Weight-Calculator/issues"
+  },
+  "homepage": "https://github.com/MichelleHettinger/Molecular-Weight-Calculator#readme"
+}
